@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jenny Sun ESG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE personal page for a working analyst: calm, exact, a little warm
+   IDEA a survey map: carbon data as terrain, her career as one surveyed route across it
+   PICTURE full-width contour map with a magenta route through six stations, Beijing to Los Angeles
+   COLOUR land #fbfbf2, sea #bfe3ee bands, ink #13242e, contour brown #a8551b, route magenta #d6127e
+   TYPE Overpass 800 for titles, Overpass for text
+   LAYOUT title and key figures across the top, map beneath full width; phone: title, map (vertical route), figures */
+:root{color-scheme:light dark;--bg:light-dark(#fbfbf2,#0d1c24);--ink:light-dark(#13242e,#e6eff2);--soft:light-dark(#4a5a63,#9fb2ba);--sea:light-dark(#bfe3ee,#12303d);--brown:light-dark(#a8551b,#d08a55);--route:light-dark(#d6127e,#ff4fa8);--card:light-dark(#ffffff,#132833);--line:light-dark(#d9d6c4,#24404c)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Overpass,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto}
+.band{padding-block:clamp(28px,4vw,64px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.sea{background:var(--sea)}
+nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding-block:18px}
+nav b{font-weight:800;font-size:18px}
+nav .links{display:flex;flex-wrap:wrap;gap:4px 20px}
+nav .links a{text-decoration:none;padding:10px 0;font-weight:600}
+nav .links a:hover,nav .links a:focus-visible{color:var(--route)}
+h1,h2,h3{font-weight:800;line-height:1.05;letter-spacing:-.02em;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5vw,52px)}
+h2{font-size:clamp(28px,3.4vw,40px);margin-bottom:12px}
+h3{font-size:20px;line-height:1.2;letter-spacing:-.01em}
+p{margin:0 0 12px;max-width:68ch}
+.lede{font-size:19px;color:var(--soft);margin-top:16px}
+.top{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:32px;align-items:end;padding-top:12px}
+.figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 24px}
+.fg b{display:block;font-size:clamp(30px,3.6vw,42px);font-weight:800;line-height:1;color:var(--route);white-space:nowrap}
+.fg span{font-size:14px;color:var(--soft)}
+.fig{position:relative;height:380px;margin-top:28px;border-radius:14px;overflow:hidden;background:var(--bg);border:1px solid var(--line)}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+svg text{paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round;font-family:Overpass,system-ui,sans-serif;fill:var(--ink)}
+.cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:24px}
+.case{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+.case p{font-size:16px;margin-top:10px}
+.where{font-size:14px;color:var(--soft);margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px;background:var(--bg)}
+.chip.hot{border-color:var(--route);color:var(--route);font-weight:600}
+.tree{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 14px;align-items:center;margin-top:14px;font-size:15px}
+.tree .q{grid-row:span 3;background:var(--sea);border-radius:10px;padding:12px 14px;font-weight:800;line-height:1.2;max-width:150px}
+.tree .a{border-left:3px solid var(--route);padding:4px 0 4px 10px}
+.funnel{margin-top:16px;display:grid;gap:8px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;font-size:15px}
+.bar{height:30px;border-radius:6px;background:var(--sea);display:flex;align-items:center;padding-left:10px;white-space:nowrap;overflow:visible}
+.bar.hot{background:var(--route);color:#fff;font-weight:600}
+.row em{font-style:normal;font-weight:800;white-space:nowrap}
+.steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:15px}
+.steps i{width:28px;height:28px;border-radius:50%;border:2px solid var(--brown);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;color:var(--brown)}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:24px}
+.trio .case b{display:block;font-size:40px;font-weight:800;line-height:1;color:var(--route);margin-bottom:10px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.principles{display:grid;gap:18px;margin-top:8px}
+.principles div{border-top:1px solid var(--line);padding-top:14px}
+.kit{display:grid;gap:18px}
+.kit h3{font-size:16px;margin-bottom:6px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;background:var(--route);color:#fff;text-decoration:none;font-weight:800}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn:focus-visible,nav a:focus-visible{outline:3px solid var(--brown);outline-offset:3px}
+footer{font-size:14px;color:var(--soft)}
+.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:24px}
+.groups h3{font-size:17px;padding-bottom:8px;border-bottom:2px solid var(--route);margin-bottom:6px}
+.pieces{list-style:none;margin:0;padding:0}
+.pieces li{padding:12px 0;border-bottom:1px solid var(--line)}
+.pieces a{font-weight:600;text-decoration:none;line-height:1.35;display:inline-block}
+.pieces a:hover,.pieces a:focus-visible{color:var(--route);text-decoration:underline}
+.pieces small{display:block;font-size:14px;color:var(--soft);margin-top:3px}
+.more{display:inline-flex;align-items:center;min-height:44px;margin-top:18px;font-weight:800;color:var(--route)}
+.facts{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px}
+.facts li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+@media(max-width:900px){.groups{grid-template-columns:minmax(0,1fr)}}
+.rt{stroke-dasharray:1;stroke-dashoffset:0}
+@media(prefers-reduced-motion:no-preference){.rt{animation:trace 1.6s ease-out 1 both}}
+@keyframes trace{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@media(max-width:900px){.trio{grid-template-columns:minmax(0,1fr)}.trio .case{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 16px;align-items:start}.trio .case b{grid-row:span 2;font-size:34px}}
+@media(max-width:760px){.top,.split,.cases{grid-template-columns:minmax(0,1fr)}.fig{height:520px}}
+@media(max-width:600px){.top{gap:20px}.lede{font-size:17px}}
+</style>
+</head>
+<body>
+<header class="band" style="padding-bottom:clamp(24px,3vw,40px)">
+<div class="wrap">
+<nav aria-label="Main">
+<b>Jenny Sun</b>
+<div class="links"><a href="#work">Work</a><a href="#approach">Approach</a><a href="#writing">Writing</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+</nav>
+<div class="top">
+<div>
+<h1>I make carbon data accurate, audit-ready and easy to act on.</h1>
+<p class="lede">Sustainability analyst at Sony Music in Los Angeles, managing a Scope 1 &amp; 2 GHG inventory across 150+ facilities. Former journalist, Oxford MBA, fluent in English and Mandarin.</p>
+</div>
+<div class="figs" aria-label="Key figures">
+<div class="fg"><b>150+</b><span>facilities in the GHG inventory I manage</span></div>
+<div class="fg"><b>50+</b><span>countries reporting into it</span></div>
+<div class="fg"><b>20+</b><span>data outliers caught by AI screening and corrected</span></div>
+<div class="fg"><b>7</b><span>external auditor requests answered directly</span></div>
+</div>
+</div>
+<div class="fig" id="map" role="img" aria-label="Career route from Beijing in 2020 to Los Angeles in 2026, through six stops"><svg id="mapsvg"></svg></div>
+</div>
+</header>
+
+<section class="band sea" id="work">
+<div class="wrap">
+<h2>Selected work</h2>
+<p>Current role: ESG Specialist, Sony Music, since July 2026. Each piece below is part of running a corporate GHG inventory end to end.</p>
+<div class="cases">
+<article class="case">
+<h3>Scope 1 &amp; 2 inventory, 50+ countries</h3>
+<div class="where">Sony Music · Persefoni</div>
+<p>I run site-level data collection for 150+ facilities: questionnaires out, gaps chased down, emissions calculated and loaded into Persefoni for reporting. I also support Scope 3 management.</p>
+<ol class="steps">
+<li><i>1</i><span>Site questionnaires and supporting documents</span></li>
+<li><i>2</i><span>QA/QC on every submission against utility evidence</span></li>
+<li><i>3</i><span>Calculation, platform upload, audit trail</span></li>
+</ol>
+</article>
+<article class="case">
+<h3>A reason for every change</h3>
+<div class="where">Sony Music · variance analysis</div>
+<p>When an emissions figure moves materially year on year, I trace it to its cause before it is reported. One example: a large jump in location-based Scope 2 emissions.</p>
+<div class="tree">
+<div class="q">Scope 2 up sharply YoY</div>
+<div class="a">Facility changes in the inventory</div>
+<div class="a">Scope 1 / 2 reclassifications</div>
+<div class="a">Energy-use patterns across offices</div>
+</div>
+<p style="margin-top:14px">For Scope 1, I break each movement down by gas.</p>
+<div class="chips"><span class="chip hot">CO₂</span><span class="chip hot">CH₄</span><span class="chip hot">HFCs</span></div>
+</article>
+<article class="case">
+<h3>AI-assisted anomaly screening</h3>
+<div class="where">Sony Music · data quality</div>
+<p>I use AI to extract consumption data from utility bills, then flag any site whose figures move more than 20% year on year.</p>
+<div class="funnel" aria-label="Screening funnel">
+<div class="row"><div class="bar" style="width:100%">Sites screened</div><em>150+</em></div>
+<div class="row"><div class="bar" style="width:62%">20% YoY threshold</div><em>rule</em></div>
+<div class="row"><div class="bar hot" style="width:30%">Outliers</div><em>20+</em></div>
+</div>
+<p style="margin-top:14px">Each outlier was traced to a data-entry or unit error and fixed before reporting.</p>
+</article>
+<article class="case">
+<h3>Controls and a decarbonization roadmap</h3>
+<div class="where">Sony Music · IMP and target planning</div>
+<p>I strengthened the GHG Inventory Management Plan with decision logs, formal internal controls and cross-functional governance, so every number can be traced.</p>
+<p>I also built a five-year Scope 1 &amp; 2 roadmap aligned with Sony's GM2030 targets, modelling renewable electricity and REC scenarios against actual consumption to project market-based Scope 2 reductions.</p>
+<div class="chips"><span class="chip">Water</span><span class="chip">Waste</span><span class="chip">Recycling rate</span><span class="chip">Energy</span></div>
+</article>
+</div>
+</div>
+</section>
+
+<section class="band">
+<div class="wrap">
+<h2>Before that: PlayStation, London</h2>
+<p>ESG Specialist on the Legal team, July 2024 to June 2026. Disclosure readiness for CDP, EU CSRD/ESRS and California SB 253, and PlayStation's UK annual report.</p>
+<div class="trio">
+<div class="case"><b>20+</b><h3>ESG topics in a double materiality assessment</h3><p>CSRD/ESRS-aligned, with stakeholder input, peer benchmarking and an ISSB financial lens.</p></div>
+<div class="case"><b>15+</b><h3>stakeholders in a climate risk analysis</h3><p>Finance, Facilities and Engineering, modelling impacts on costs, operations and capital allocation.</p></div>
+<div class="case"><b>7</b><h3>external auditor requests answered</h3><p>Drafted the responses and prepared the supporting evidence.</p></div>
+</div>
+</div>
+</section>
+
+<section class="band sea" id="approach">
+<div class="wrap split">
+<div>
+<h2>A journalist's habit, applied to emissions data</h2>
+<p>I spent years as a reporter, first covering technology companies at 36Kr in Beijing, then writing 300+ stories on human rights for organizations including the United Nations and Plan International. The habit carried over: when a number looks odd, find out why.</p>
+<p>It also means I can explain a variance to a finance lead, a facilities manager or an executive in words each of them will use.</p>
+</div>
+<div class="principles">
+<div><h3>Check before reporting</h3><p>Every submission is reconciled against evidence, and every big movement has a documented cause.</p></div>
+<div><h3>Leave an audit trail</h3><p>Decision logs and controls mean an auditor can follow each figure back to its source.</p></div>
+<div><h3>Make it usable</h3><p>Data is only useful once the people who act on it understand it.</p></div>
+</div>
+</div>
+</section>
+
+<section class="band" id="writing">
+<div class="wrap">
+<h2>Selected writing and reporting</h2>
+<p>Before carbon accounting, I reported in English and Chinese for outlets in the US and China. A selection, grouped by theme.</p>
+<div class="groups">
+<div>
+<h3>Climate and sustainability</h3>
+<ul class="pieces">
+<li><a href="http://www.miaopai.com/show/DQP0eiE6reIb9odt97X1PAyTCnivzepz.htm">U.S. Withdrawal from the Paris Agreement</a><small>Video report, Miaopai</small></li>
+<li><a href="http://multimedianewsroom.us/2018/02/18/trending-of-eco-friendly-alpaca-products/">Trending of Eco-Friendly Alpaca Products</a><small>Multimedia Newsroom, 2018</small></li>
+<li><a href="https://www.youthcolab.org/post/first-respond-china-s-marathon-life-saver">First Respond: China's Marathon Life Saver</a><small>UNDP Youth Co:Lab and Change Magazine</small></li>
+</ul>
+</div>
+<div>
+<h3>Business, trade and data</h3>
+<ul class="pieces">
+<li><a href="http://www.xinhuanet.com/english/2018-04/05/c_137089259.htm">Trade barriers detrimental to consumers, workers: U.S. expert</a><small>Xinhua, 2018</small></li>
+<li><a href="http://www.xinhuanet.com/english/2018-04/14/c_137110279.htm">China's continued commitment to opening-up welcomed by business communities</a><small>Xinhua, 2018</small></li>
+<li><a href="https://www.voachinese.com/a/smoking-20170711/3937989.html">中美烟民的变化和一些相关分析</a><small>VOA Chinese, 2017. A data analysis of smoking trends in China and the US</small></li>
+<li><a href="https://mp.weixin.qq.com/s/C5uTYSBtfjoim6DJ4rpYUQ">亚马逊放大招！Whole Foods收购案是场什么局？</a><small>WeChat. What Amazon's Whole Foods deal means</small></li>
+</ul>
+</div>
+<div>
+<h3>People and communities</h3>
+<ul class="pieces">
+<li><a href="https://mp.weixin.qq.com/s/43mfJjwqYcKwu_D_OkyoKQ">Story for Plan International</a><small>WeChat, in Chinese</small></li>
+<li><a href="https://asamnews.com/2017/05/11/california-sets-aside-day-for-chinese-transcontinental-rail-workers/">California Sets Aside Day for Chinese Transcontinental Rail Workers</a><small>AsAm News, 2017</small></li>
+<li><a href="https://17073c6e-bf74-4832-99c2-99f91c3b6dff.filesusr.com/ugd/a40280_a88da4c2078940d899dfc63d45597217.pdf">School and Community: a Houston elementary school</a><small>Feature, PDF</small></li>
+</ul>
+</div>
+</div>
+<a class="more" href="https://jennysun1225.wixsite.com/mysite/stories-reporting">See the full archive of 50+ pieces</a>
+</div>
+</section>
+
+<section class="band sea" id="about">
+<div class="wrap split">
+<div>
+<h2>About me</h2>
+<p>I grew up in Changzhou, China, which is where my curiosity about people and society started. I moved to the US to study journalism and began by covering social change, business and technology.</p>
+<p>As a reporter I followed human-centered stories: pregnant women facing unequal systems, migrant workers and seafarers, elders whose lives were shaped by hardship. Some of those stories reunited long-lost friends, raised donations for an Afghan girl, and were included in a book by Contemporary World Press.</p>
+<p>I co-founded a school serving underserved communities, then completed an MBA at Oxford. Today I work where sustainability, data and storytelling meet. I've lived and worked in Beijing, Shanghai, Austin, Houston, Washington D.C., San Francisco, Oxford, London and now Los Angeles.</p>
+</div>
+<div>
+<h3>Off the clock</h3>
+<ul class="facts">
+<li>Performed about 15 stand-up comedy shows in New York</li>
+<li>Walked the Berlin red carpet</li>
+<li>Can name more than 20 seal species</li>
+<li>Long-term sponsor of an injured donkey</li>
+<li>Has appeared on CBS News</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="band" id="toolkit">
+<div class="wrap split">
+<div>
+<h2>Toolkit</h2>
+<p>Built for corporate carbon accounting and disclosure, with an Oxford MBA in accounting and corporate finance underneath.</p>
+</div>
+<div class="kit">
+<div><h3>Platforms and tools</h3><div class="chips"><span class="chip">Persefoni</span><span class="chip">Excel (advanced)</span><span class="chip">Tango</span><span class="chip">Microsoft 365</span><span class="chip">ChatGPT</span><span class="chip">Copilot</span></div></div>
+<div><h3>Frameworks and standards</h3><div class="chips"><span class="chip">GHG Protocol</span><span class="chip">California SB 253 / SB 261</span><span class="chip">EU CSRD / ESRS</span><span class="chip">ISSB</span><span class="chip">CDP</span><span class="chip">SASB</span><span class="chip">TCFD</span><span class="chip">SSBJ</span></div></div>
+<div><h3>Certificates</h3><p>GHG Carbon Accounting (Persefoni); TCFD; UN Movers Programme on Climate Change; AI Strategy and Governance (Wharton Online)</p></div>
+<div><h3>Education</h3><p>MBA, University of Oxford, Forté Scholar. Bachelor of Journalism, University of Texas at Austin, with honors.</p></div>
+</div>
+</div>
+</section>
+
+<section class="band sea" id="contact">
+<div class="wrap">
+<h2>Let's talk</h2>
+<p>I'm based in Los Angeles. Happy to connect about carbon accounting, sustainability reporting and ESG data.</p>
+<div class="cta">
+<a class="btn" href="https://www.linkedin.com/in/jiayi-sun1/">Connect on LinkedIn</a>
+<a class="btn ghost" href="mailto:awwwjenny1225@gmail.com">awwwjenny1225@gmail.com</a>
+</div>
+</div>
+</section>
+
+<footer class="band" style="padding-block:24px">
+<div class="wrap">Jenny (Jiayi) Sun, Los Angeles</div>
+</footer>
+
+<script>
+{
+const stops=[
+ {y:"2020",place:"Beijing",role:"Tech journalist, 36Kr"},
+ {y:"2021",place:"Remote",role:"Independent journalist"},
+ {y:"2022",place:"Remote",role:"ESG consultant, Greeshore Plan"},
+ {y:"2023",place:"Oxford",role:"MBA"},
+ {y:"2024",place:"London",role:"ESG, PlayStation"},
+ {y:"2026",place:"Los Angeles",role:"ESG, Sony Music"}
+];
+const s=document.getElementById('mapsvg');
+let seed=7;
+const rnd=()=>(seed=seed*16807%2147483647)/2147483647;
+const phases=Array.from({length:40},()=>rnd()*6.283);
+const smooth=pts=>{let d='';const n=pts.length;for(let i=0;i<n;i++){const p=pts[i],q=pts[(i+1)%n];const mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2;d+=(i?' Q':'M')+(i?p[0].toFixed(1)+' '+p[1].toFixed(1)+' ':'')+mx.toFixed(1)+' '+my.toFixed(1)}return d+'Z'};
+let drawn=false;
+const draw=()=>{
+ const W=s.clientWidth,H=s.clientHeight;if(!W||!H)return;
+ const vert=W<760;
+ let out='';
+ const hills=vert?[[W*.75,H*.25,7],[W*.3,H*.7,6],[W*.9,H*.85,5]]:[[W*.18,H*.3,7],[W*.55,H*.75,8],[W*.86,H*.25,6]];
+ hills.forEach((h,hi)=>{
+  for(let k=1;k<=h[2];k++){
+   const r=k*Math.min(W,H)*.075;const pts=[];
+   for(let a=0;a<24;a++){const t=a/24*6.283;const n=1+.18*Math.sin(t*2+phases[hi*3])+.1*Math.sin(t*3+phases[hi*3+1]+k*.3);pts.push([h[0]+Math.cos(t)*r*n*1.25,h[1]+Math.sin(t)*r*n])}
+   out+=`<path d="${smooth(pts)}" fill="none" stroke="var(--brown)" stroke-opacity="${k%4===0?.55:.28}" stroke-width="${k%4===0?1.6:1}"/>`;
+  }
+ });
+ const P=stops.map((st,i)=>{
+  if(vert){const top=48,bot=H-40;return [56+(i%2?18:0),top+(bot-top)*i/(stops.length-1)]}
+  const l=95,r=W-95;return [l+(r-l)*i/(stops.length-1),i%2?H*.66:H*.38];
+ });
+ let d=`M${P[0][0]} ${P[0][1]}`;
+ for(let i=1;i<P.length;i++){const a=P[i-1],b=P[i];if(vert){const my=(a[1]+b[1])/2;d+=` C${a[0]} ${my} ${b[0]} ${my} ${b[0]} ${b[1]}`}else{const mx=(a[0]+b[0])/2;d+=` C${mx} ${a[1]} ${mx} ${b[1]} ${b[0]} ${b[1]}`}}
+ out+=`<path d="${d}" fill="none" stroke="var(--bg)" stroke-width="11" stroke-linecap="round"/>`;
+ out+=`<path id="rt" class="${drawn?'':'rt'}" pathLength="1" d="${d}" fill="none" stroke="var(--route)" stroke-width="5" stroke-linecap="round"/>`;
+ P.forEach((p,i)=>{
+  const st=stops[i],last=i===P.length-1;
+  out+=`<circle cx="${p[0]}" cy="${p[1]}" r="${last?11:8}" fill="${last?'var(--route)':'var(--bg)'}" stroke="var(--ink)" stroke-width="2.5"/>`;
+  if(vert){
+   const x=p[0]+24;
+   out+=`<text x="${x}" y="${p[1]-4}" font-size="16" font-weight="800">${st.place}, ${st.y}</text><text x="${x}" y="${p[1]+15}" font-size="14">${st.role}</text>`;
+  }else{
+   const up=i%2===0,y=up?p[1]-42:p[1]+30;
+   out+=`<text x="${p[0]}" y="${y}" text-anchor="middle" font-size="16" font-weight="800">${st.place}, ${st.y}</text><text x="${p[0]}" y="${y+19}" text-anchor="middle" font-size="14">${st.role}</text>`;
+  }
+ });
+ s.innerHTML=out;drawn=true;
+};
+const ro=new ResizeObserver(draw);ro.observe(s);
+}
+</script>
+</body>
+</html>
